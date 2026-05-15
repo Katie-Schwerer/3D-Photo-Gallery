@@ -30,8 +30,19 @@ document.body.appendChild(renderer.domElement); // Add the renderer to the HTML
 // Light
 // Ambient Light
 let ambientLight = new THREE.AmbientLight(0x101010, 1.0); // color, intensity, distance, decoy
-ambientLight.position = camera.position; // light follows camera
+ambientLight.position.set(camera.position.x, camera.position.y, camera.position.z); // light follows camera
 scene.add(ambientLight);
 
 // Directional Light
-let sunLight =  new THREE.DirectionalLight();
+let sunLight =  new THREE.DirectionalLight(0xdddddd, 1.0); // color, intensity
+sunLight.position.y = 15; // position the light above the scene
+scene.add(sunLight);
+
+let geometry = new THREE.BoxGeometry(1, 1, 1); // BoxGeometry is the shape of the object
+let material = new THREE.MeshBasicMaterial({ color: 0xff0000}); //  color of the object
+let cube = new THREE.Mesh(geometry, material);
+
+scene.add(cube); // add the mesh to the scene
+
+// Render
+renderer.render(scene, camera); // render the scene from the perspective of the camera
