@@ -44,5 +44,41 @@ let cube = new THREE.Mesh(geometry, material);
 
 scene.add(cube); // add the mesh to the scene
 
-// Render
-renderer.render(scene, camera); // render the scene from the perspective of the camera
+// Controls
+// Event Listener for when we press the keys
+document.addEventListener('keydown', onKeyDown, false);
+
+function onKeyDown(event) {
+    let keycode = event.which;
+
+    switch (keycode) {
+        // right arrow key
+        case 39:
+            camera.translateX(-0.05);
+            break;
+        // left arrow key
+        case 37:
+            camera.translateX(0.05);
+            break;
+        // up arrow key
+        case 38:
+            camera.translateY(-0.05);
+            break;
+        // down arrow key
+        case 40:
+            camera.translateY(0.05);
+            break;
+        default:
+            break;
+    }
+}
+
+let renderLoop = function () {
+    cube.rotation.x += 0.01;
+    cube.rotation.y += 0.01;
+    renderer.render(scene, camera); // render the scene from the perspective of the camera
+
+    requestAnimationFrame(renderLoop); // call renderLoop again on the next frame
+}
+
+renderLoop();
